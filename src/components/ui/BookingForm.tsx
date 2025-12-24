@@ -39,9 +39,33 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit }) => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+  e.preventDefault();
+
+  const phoneNumber = '918890180831'; // WhatsApp number (no +)
+
+  const message = `
+📅 *New Appointment Booking*
+
+👤 Name: ${formData.name}
+📧 Email: ${formData.email}
+📞 Phone: ${formData.phone}
+
+💇 Service: ${formData.service}
+🎨 Stylist: ${formData.stylist || 'Any Available'}
+
+🗓 Date: ${formData.date}
+⏰ Time: ${formData.time}
+
+📝 Notes: ${formData.notes || 'None'}
+  `;
+
+  const encodedMessage = encodeURIComponent(message);
+
+  const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+  window.open(whatsappURL, '_blank');
+};
+
 
   const services = [
     'Haircut & Styling',
